@@ -12,7 +12,7 @@ import {instrumentsDBTable} from "./instruments.DBtable";
 let highestId = Math.max(...(Object.keys(instrumentsDBTable) as any))
 
 /** Async is not needed, but just for real life scenario **/
-async function findAll() {
+async function find() {
     return Object.values(instrumentsDBTable);
 }
 
@@ -29,7 +29,7 @@ async function deleteInstrument(id) {
 }
 
 const InstrumentModel = {
-    findAll,
+    find,
     create: createInstrument,
     delete: deleteInstrument,
 }

@@ -1,7 +1,7 @@
 import InstrumentModel from "../model/instruments.model";
 
 export async function getAllInstruments() {
-    return InstrumentModel.findAll();
+    return InstrumentModel.find();
 }
 
 export async function createInstrument(instrument) {
