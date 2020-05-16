@@ -1,11 +1,11 @@
 import React from 'react';
-import {IInstruments} from "../../interfaces";
+import {IInstrument} from "../../interfaces";
 import {Table, Thead, Tbody, Tr, Th, Td} from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import "./InstrumentsTable.css"
 
 interface InstrumentsTableProps {
-    instruments: Array<IInstruments>,
+    instruments: Array<IInstrument>,
     onDelete: (instrumentId: number) => void,
 }
 
@@ -29,7 +29,7 @@ export default function InstrumentsTable({instruments, onDelete}: InstrumentsTab
                             <Td>{t.name}</Td>
                             <Td>{t.instrumentType}</Td>
                             <Td>{t.symbol}</Td>
-                            <Td onClick={() => { onDelete && onDelete(t.instrumentId)}}>X</Td>
+                            <Td onClick={() => { onDelete && onDelete(t.instrumentId as number)}}>X</Td>
                         </Tr>))
                 }
             </Tbody>

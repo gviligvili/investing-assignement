@@ -1,6 +1,6 @@
-export type IInstruments = {
-    instrumentId: number,
-    name: string,
-    symbol: string,
-    instrumentType: string,
+export type IInstrument = {
+    instrumentId?: number,
+    name?: string,
+    symbol?: string,
+    instrumentType?: string,
 }
