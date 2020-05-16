@@ -8,15 +8,21 @@ import {IInstrument} from "../interfaces";
 
 const INSTRUMENTS_URL = `${Settings.get().BASE_URL}/instruments/`;
 
+/** Smart component incharge of managing the instruments view */
 export default function InstrumentsPage() {
     let [updateCounter, setUpdateCounter] = useState(0);
     const [name, setName] = useState("");
     const [symbol, setSymbol] = useState("");
     const [instrumentType, setInstrumentType] = useState("");
+    const [query, setQuery] = useState("");
 
+    // Get instruments
+    const {error, loading, data: instruments} = useFetch({url: INSTRUMENTS_URL, counter: updateCounter});
 
-
-    const {error, loading, data} = useFetch({url: INSTRUMENTS_URL, counter: updateCounter});
+    // If instruments received, filter them by teh search query.
+    let showInstruments = instruments && instruments.filter((inst: IInstrument) => {
+        return inst.name!.toLowerCase().includes(query.toLowerCase())
+    });
 
     const deleteInstrument = useCallback(async (instrumentId) => {
         await axios.delete(`${INSTRUMENTS_URL}${instrumentId}`);
@@ -37,7 +43,7 @@ export default function InstrumentsPage() {
             {error ?
                 <div className="error">{error}</div>
                 :
-                (loading && !data) ?
+                (loading && !instruments) ?
                     <div> loading </div> :
                     <div>
                         <br/>
@@ -47,8 +53,11 @@ export default function InstrumentsPage() {
                             <input type="text" placeholder={"instrument Type"} value={instrumentType} onChange={e => setInstrumentType(e.target.value)}/>
                             <button onClick={() => saveInstrument()}>Save instrument</button>
                         </div>
+                        <div>
+                            <input type="text" placeholder={"Search"} value={query} onChange={e => setQuery(e.target.value)}/>
+                        </div>
                         <br/>
-                        <InstrumentsTable instruments={data} onDelete={deleteInstrument}/>
+                        <InstrumentsTable instruments={showInstruments} onDelete={deleteInstrument}/>
                     </div>
             }
         </div>
