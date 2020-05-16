@@ -1,10 +1,14 @@
 import express from "express";
 import cors from "cors";
+import bodyParser from 'body-parser';
+
 import { default as morgan } from "morgan";
 import Settings from "./config/settings";
 import {assignRoutes} from "./routes";
 
 const app = express();
+
+app.use(bodyParser.json())
 app.use(morgan("default"));
 
 /**
